@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import SignUp from './components/SignUp'
+import Login from './components/Login'
+import ForgotPassword from './components/ForgotPassword'
+import DashBoard from './components/DashBoard'
+import UpdateProfile from './components/UpdateProfile'
+import { Container } from 'react-bootstrap'
+import { AuthProvider } from './context/AuthContext'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <AuthProvider>
+      <Container className="d-flex align-items-center justify-content-center"
+      style={{minHeight: "100vh"}}>
+      <div className="w-100" style={{maxWidth: "400px"}}>
+        <Router>
+            <Switch>
+              <Route path="/signup" component={SignUp} />
+              <Route path="/login" component={Login} />
+              <Route path="/forgot-password" component={ForgotPassword} />
+              <Route path="/update-profile" component={UpdateProfile} />
+              <Route exact path='/' component={DashBoard}/>
+            </Switch>
+        </Router>
+      </div>
+      </Container>
+    </AuthProvider>
+  )
 }
 
 export default App;
