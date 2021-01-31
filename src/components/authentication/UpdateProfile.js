@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { Card, Form, Button, Alert } from 'react-bootstrap'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../../context/AuthContext'
+import CenteredContainer from '../CenteredContainer'
 import { Link, useHistory } from 'react-router-dom'
 
 export default function UpdateProfile() {
@@ -30,7 +31,7 @@ export default function UpdateProfile() {
         }
 
         Promise.all(promises).then(() => {
-            history.push('/')
+            history.push('/user')
         }).catch(() => {
             setError('Failed to update account')
         }).finally(() => {
@@ -39,7 +40,7 @@ export default function UpdateProfile() {
     }
 
     return (
-        <>
+        <CenteredContainer>
             <Card>
                 <Card.Body>
                     <h2 className="text-center mb-4">UpdateProfile</h2>
@@ -65,8 +66,8 @@ export default function UpdateProfile() {
                 </Card.Body>
             </Card>
             <div className="w-100 text-center mt-2">
-                <Link to='/'>Cancle</Link>
+                <Link to='/user'>Cancle</Link>
             </div>
-        </>
+        </CenteredContainer>
     )
 }

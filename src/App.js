@@ -1,29 +1,25 @@
-import SignUp from './components/SignUp'
-import Login from './components/Login'
-import ForgotPassword from './components/ForgotPassword'
-import DashBoard from './components/DashBoard'
-import UpdateProfile from './components/UpdateProfile'
-import { Container } from 'react-bootstrap'
+import SignUp from './components/authentication/SignUp'
+import Login from './components/authentication/Login'
+import ForgotPassword from './components/authentication/ForgotPassword'
+import Profile from './components/authentication/Profile'
+import UpdateProfile from './components/authentication/UpdateProfile'
+import Dashboard from './components/gdrive/Dashboard.js'
 import { AuthProvider } from './context/AuthContext'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 function App() {
   return (
     <AuthProvider>
-      <Container className="d-flex align-items-center justify-content-center"
-      style={{minHeight: "100vh"}}>
-      <div className="w-100" style={{maxWidth: "400px"}}>
-        <Router>
-            <Switch>
-              <Route path="/signup" component={SignUp} />
-              <Route path="/login" component={Login} />
-              <Route path="/forgot-password" component={ForgotPassword} />
-              <Route path="/update-profile" component={UpdateProfile} />
-              <Route exact path='/' component={DashBoard}/>
-            </Switch>
-        </Router>
-      </div>
-      </Container>
+      <Router>
+        <Switch>
+          <Route path="/signup" component={SignUp} />
+          <Route path="/login" component={Login} />
+          <Route path="/forgot-password" component={ForgotPassword} />
+          <Route path="/update-profile" component={UpdateProfile} />
+          <Route path='/user' component={Profile}/>
+          <Route exact path='/' component={Dashboard} />
+        </Switch>
+      </Router>
     </AuthProvider>
   )
 }
