@@ -1,12 +1,14 @@
 import { useReducer, useEffect } from 'react'
 import { database } from '../firebase'
+import { useAuth } from '../context/AuthContext'
 
 const ACTIONS = {
     SELECT_FOLDER: 'SELECT_FOLDER',
-    UPDATE_FOLDER: 'UPDATE_FOLDER'
+    UPDATE_FOLDER: 'UPDATE_FOLDER',
+    SET_CHILD_FOLDERS: 'SET_CHILD_FOLDERS'
 }
 
-const ROOT_FOLDER = { name: 'Root', id: null, path: [] }
+export const ROOT_FOLDER = { name: 'Root', id: null, path: [] }
 
 function reducer(state, { type, payload }) {
     switch(type) {
@@ -22,6 +24,11 @@ function reducer(state, { type, payload }) {
                 ...state,
                 folder: payload.folder
             }
+        case ACTIONS.SET_CHILD_FOLDERS:
+            return {
+                ...state,
+                childFolders: payload.childFolders
+            }
         default:
             return state
     }
@@ -34,6 +41,8 @@ export function useFolder(folderId = null, folder = null) {
         childFolders: [],
         childFiles: []
     })
+
+    const { currentUser } = useAuth()
 
     useEffect(() => {
         dispatch({ type: ACTIONS.SELECT_FOLDER, payload: {
@@ -61,6 +70,18 @@ export function useFolder(folderId = null, folder = null) {
             })
         })
     }, [folderId])
+
+    useEffect(() => {
+        return database.folders.where("parentId", "==", folderId)
+        .where('userId', '==', currentUser.uid)
+        .orderBy("createdAt")
+        .onSnapshot(snapshot => {
+            dispatch({
+                type: ACTIONS.SET_CHILD_FOLDERS,
+                payload: { childFolders: snapshot.docs.map(database.formatDoc) }
+            })
+        })
+    }, [folderId, currentUser])
 
     return state
 }

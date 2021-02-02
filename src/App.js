@@ -17,6 +17,7 @@ function App() {
           <Route path="/forgot-password" component={ForgotPassword} />
           <Route path="/update-profile" component={UpdateProfile} />
           <Route path='/user' component={Profile}/>
+          <Route path='/folder/:folderId' component={Dashboard} />
           <Route exact path='/' component={Dashboard} />
         </Switch>
       </Router>
