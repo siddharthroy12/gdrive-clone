@@ -7,12 +7,8 @@ import { useFolder } from '../../hooks/useFolder'
 import Folder from './Folder'
 import File from './File'
 import { useParams } from 'react-router-dom'
-import { useHistory } from 'react-router-dom' 
-import { useAuth } from '../../context/AuthContext'
 
 export default function Dashboard() {
-    const { currentUser } = useAuth()
-    const history = useHistory()
 
     const { folderId } = useParams()
     const { folder, childFolders, childFiles } = useFolder(folderId)
