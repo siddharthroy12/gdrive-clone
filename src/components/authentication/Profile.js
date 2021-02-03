@@ -21,10 +21,6 @@ export default function Profile() {
 
     }
 
-    if (!currentUser) {
-        history.push('/login')
-    }
-
     return (
         <>
         {currentUser && (
